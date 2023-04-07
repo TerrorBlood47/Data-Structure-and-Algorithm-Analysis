@@ -1,0 +1,7 @@
+Topic : Stack
+
+Resources: 
+        1. GeeksForGeeks(https://www.geeksforgeeks.org/stack-data-structure/)
+        2. Aditya Verma 
+        
+Notes: 

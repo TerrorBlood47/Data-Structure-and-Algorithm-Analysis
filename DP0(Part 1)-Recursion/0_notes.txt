@@ -1,0 +1,7 @@
+Topic : Recursion
+Resources: 
+        1. Aditya Verma Recursion Playlist (https://www.youtube.com/watch?v=kHi1DUhp9kM&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=1)
+        
+Notes: 4 approaches :
+        1. Hypothesis-Induction-Base Condition Approach - recursively defined                           
+        2.  Recursive Tree Approach : i) Create a recursive binary tree(input/output method)-choice and decision

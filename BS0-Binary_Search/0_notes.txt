@@ -1,0 +1,15 @@
+Topic : Binary Search
+
+Resources :
+        1. Aditya Verma Playlist ( https://www.youtube.com/playlist?list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2 )
+        2. cp_algoritms Website( https://cp-algorithms.com/num_methods/binary_search.html#search-in-sorted-arrays )
+        3. Luv videos
+
+
+
+
+Notes:
+        1. Use Mid = Low + (High-Low)/2 instead of (Low+High)/2 to avoid integer overflow
+        2. The number of times a sorted array is rotated is the index of minimum element (0,1,....,N-1)
+        3. Infinte Sorted Array (Important for Interview) : https://youtu.be/FzvK5uuaki8 + https://youtu.be/8x6dmO6XW8k
+        
