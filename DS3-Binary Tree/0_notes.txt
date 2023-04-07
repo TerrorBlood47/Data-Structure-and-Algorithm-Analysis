@@ -1,0 +1,9 @@
+Topic : Binary Tree
+
+Resources :
+Binary Tree:
+        1. GeeksForGeeks(https://www.geeksforgeeks.org/binary-tree-data-structure/)
+           
+Notes:
+Binary Tree:
+        1. GeeksForGeeks - Intro, Types,Application,Advantage & disadvantage

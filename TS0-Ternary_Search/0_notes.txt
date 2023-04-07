@@ -1,0 +1,11 @@
+Topic : Ternary Search -> not in the syllabus
+
+Resources :
+        1. Pepcoding vidoes, YouTube (https://youtu.be/kch3MpnylB8)
+
+
+
+
+Notes:
+        1. Use Mid1 = Low + (High-Low)/3 and Mid2 = High - (High-Low)/3 
+       
