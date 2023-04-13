@@ -4,13 +4,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
+class TreeNode{
 public:
     int data;
-    Node* left; //left_child
-    Node* right;  // right_child
+    TreeNode* left; //left_child
+    TreeNode* right;  // right_child
 
-    Node(int data){
+    TreeNode(int data){
         this->data = data;
         this->left = NULL;
         this->right = NULL;
@@ -20,7 +20,7 @@ public:
 class BinarySearchTree{
 public: 
 
-    Node* root;
+    TreeNode* root;
 
     BinarySearchTree(){
         root = NULL;
@@ -28,9 +28,9 @@ public:
 
 private: 
 
-    Node* p_insert(Node* parent, int val){
+    TreeNode* p_insert(TreeNode* parent, int val){
         if(parent==NULL){
-            parent = new Node(val);
+            parent = new TreeNode(val);
             return parent;
         }
         if(val < parent->data){ // <= ??
@@ -44,14 +44,8 @@ private:
 
 
 
-
-
-
-
-
-
-    Node* findMinNode(Node* node){
-        Node* curr = node;
+    TreeNode* findMinNode(TreeNode* node){
+        TreeNode* curr = node;
 
         while(curr && curr->left!=NULL){
             curr = curr->left ;
@@ -61,7 +55,7 @@ private:
     }
 
 
-    Node* remove(Node* node, int val){
+    TreeNode* remove(TreeNode* node, int val){
         
         if(node == NULL){
             return node;
@@ -80,18 +74,18 @@ private:
                 return NULL;
             }
             else if(node->left!=NULL && node->right==NULL){//node with only left child
-                Node* temp = node->left;
+                TreeNode* temp = node->left;
                 free(node);
                 return temp;
             }
             else if(node->left==NULL && node->right!=NULL){//node with only right child
-                Node* temp = node->right;
+                TreeNode* temp = node->right;
                 free(node);
                 return temp;
             }
 
             //nodes with two children
-            Node* temp = findMinNode(node->right);
+            TreeNode* temp = findMinNode(node->right);
             node->data = temp->data;
 
             node->right = remove(node->right,temp->data);
@@ -103,17 +97,7 @@ private:
 
 
 
-
-
-
-
-
-
-
-
-
-
-    void PreOrder(Node* curr_node){
+    void PreOrder(TreeNode* curr_node){
         if(curr_node==NULL){
             return;
         }
@@ -123,7 +107,7 @@ private:
     }
 
 
-    void InOrder(Node* curr_node){
+    void InOrder(TreeNode* curr_node){
 
         if(curr_node==NULL){
             return;
@@ -135,7 +119,7 @@ private:
     }
 
 
-    void PostOrder(Node* curr_node){
+    void PostOrder(TreeNode* curr_node){
         if(curr_node==NULL){
             return;
         }
@@ -145,7 +129,7 @@ private:
         cout<<curr_node->data<<" ";
     }
 
-    int p_height(Node* node){
+    int p_height(TreeNode* node){
 
         if(node == NULL){
             return 0;
@@ -162,7 +146,7 @@ private:
         }
     }
 
-    void printGivenLevel(Node* node, int level){
+    void printGivenLevel(TreeNode* node, int level){
         if(node==NULL){
             return;
         }
@@ -176,7 +160,7 @@ private:
         }
     }
 
-void printLeafNodes(Node* node){
+void printLeafNodes(TreeNode* node){
 
     if(node==NULL){
         return;
@@ -192,7 +176,7 @@ void printLeafNodes(Node* node){
     }
 }
 
-void print_NonLeafNodes(Node* node){
+void print_NonLeafNodes(TreeNode* node){
     if(node==NULL){
         return;
     }
@@ -205,7 +189,7 @@ void print_NonLeafNodes(Node* node){
 }
 
 
-int node_count(Node* node){
+int node_count(TreeNode* node){
 
     if(node==NULL){
         return 0;
@@ -215,7 +199,7 @@ int node_count(Node* node){
 }
 
 
-Node* clearBST(Node* node){
+TreeNode* clearBST(TreeNode* node){
 
     if(node==NULL){
         return NULL;
@@ -226,14 +210,14 @@ Node* clearBST(Node* node){
 
     cout<<"\nReleased node:"<< node->data;
 
-    Node* temp = node;
+    TreeNode* temp = node;
     free(temp);
     node=NULL;
     return node;
 }
 
 
-int p_search(Node* node, int val){
+int p_search(TreeNode* node, int val){
 
     if(node == NULL){ //this needs to come above all as it might be nullptr
         return -1;
@@ -251,7 +235,59 @@ int p_search(Node* node, int val){
     }
 }
 
+bool determineFull(TreeNode* node){
+    if(node==NULL){
+        return true;
+    }
+    
+    if((node->left==NULL && node->right!= NULL) or (node->left!=NULL && node->right== NULL)){
+        //cout<<"node of conviction : "<<node->data<<endl;
+        return false;
+    }
+    else{
+        //cout<<" going left : "<<node->left->data<<" maybe left isn't right :"<<node->right->data<<endl;
+        return determineFull(node->left) and determineFull(node->right);
+    }
+}
 
+
+
+bool determineComplete(TreeNode* node, int index, int count_nodes){
+    
+    if(node==nullptr) return true;
+    
+    if(index >= count_nodes) return false;
+
+    return determineComplete(node->left, 2*index + 1, count_nodes) 
+                and determineComplete(node->right,2*index + 2, count_nodes);
+}
+
+bool determineBalanced(TreeNode* node){
+    if(node==NULL){
+        return true;
+    }
+
+    int left_height = p_height(node->left);
+    int right_height = p_height(node->right);
+
+    if(abs(left_height-right_height)>1){
+        return false;
+    }
+
+    return determineBalanced(node->left) && determineBalanced(node->right);
+}
+
+
+bool determinePerfect(TreeNode* node){
+
+    if(node==NULL) return true;
+
+    if((node->left==NULL && node->right!= NULL) or (node->left!=NULL && node->right== NULL)){
+        return false;
+    }
+
+    return determinePerfect(node->left) && determinePerfect(node->right);
+}
 
 
 public:
@@ -293,7 +329,7 @@ public:
     }
 
     int minValue(){
-        Node* curr = root;
+        TreeNode* curr = root;
         if(root==NULL){
             cout<<"Empty tree"<<endl;
             return INT_MIN;
@@ -316,6 +352,23 @@ public:
         return p_search(root,val);
     }
 
+    bool isFull(){
+        return determineFull(root);
+    }
+
+    bool isComplete(){
+        int count_nodes = node_count(root);
+        return determineComplete(root, 0 , count_nodes);
+    }
+
+    bool isBalanced(){
+        return determineBalanced(root);
+    }
+
+    bool isPerfect(){
+        return determinePerfect(root);
+    }
+
 };
 
 
@@ -330,42 +383,42 @@ int main(){
     t.addNode(70);
     t.addNode(60);
     t.addNode(80);
-    t.addNode(10);
-    t.addNode(100);
+    ///t.addNode(10);
+    //t.addNode(100);
+    //t.addNode(25);
+    //t.addNode(75);
+    //t.addNode(5);
 
     
 
-    t.printPreOrder();
-    cout<<endl;
-    t.printInOrder();
-    cout<<endl;
-    t.printPostOrder();
+    // t.printPreOrder();
+    // cout<<endl;
+    // t.printInOrder();
+    // cout<<endl;
+    // t.printPostOrder();
 
-    cout<<endl<<"height = "<<t.height_of_the_tree()<<endl;
+    // cout<<endl<<"height = "<<t.height_of_the_tree()<<endl;
 
-    int h = t.height_of_the_tree();
+     int h = t.height_of_the_tree();
+     cout<<h<<endl;
 
-    //t.deleteNode(20);
-    //t.deleteNode(50);
+    // //t.deleteNode(20);
+    // //t.deleteNode(50);
 
-    //t.clear();
+    // //t.clear();
 
     for(int i=0;i<h;i++){
         t.printTheLevel(i+1);
         cout<<endl;
     }
 
-    //t.print_All_Leaf_Nodes();
-    cout<<endl;
-    //t.print_All_NonLeaf_Nodes();
+    //cout<<t.isFull()<<endl;
 
-    cout<<endl;
+    //cout<<t.isBalanced()<<endl;
 
-    //cout<<t.minValue()<<endl;
+    //cout<<t.isComplete()<<endl;
 
-    cout<<t.totalNodeCount()<<endl;
-
-    cout<<t.search(1000)<<endl;
+    cout<<t.isPerfect()<<endl;
 
     return 0;
 }
