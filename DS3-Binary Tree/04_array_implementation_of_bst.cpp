@@ -41,7 +41,7 @@ public:
 class BinarySearchTreeArray{
     int capacity ;
     Object* bt;
-    int root;
+    
 
 public:
 
@@ -49,8 +49,6 @@ public:
         this->capacity = capacity;
         bt = new Object[4*capacity]; //check
 
-        
-        root = 0;
     }
 
 private:
@@ -69,12 +67,22 @@ void insert(int node, Object x){
     }
 }
 
+int findMinNode(int node){
+    int curr = node;
 
-void remove(int node, Object x){
+    while(bt[curr].roll!=0 && bt[2*curr + 1].roll!=0){
+        curr = 2*curr + 1;
+    }
+
+    return curr;
+}
+
+int remove(int node, Object x){
 
     if(node> 4*capacity){
-        cout<<"not found"<<endl;
-        return;
+        cout<<"not found 1"<<endl;
+        //throw "not found";
+        return INT_MIN;
     }
 
     if(x.roll < bt[node].roll){
@@ -87,13 +95,33 @@ void remove(int node, Object x){
 
         if(x.equals(bt[node])){ //equals works
 
-            //cout<<"2dwdsad"<<endl;
-            bt[node] = Object();
-            return ;
+            if(bt[2*node+1].roll==0 and bt[2*node+2].roll==0){
+                bt[node] = Object();
+                return node;
+            }
+            else if(bt[2*node+1].roll!=0 and bt[2*node+2].roll==0){
+                int temp = 2*node + 1;
+                bt[node] = Object();
+                return temp;
+            }
+            else if(bt[2*node+1].roll==0 and bt[2*node+2].roll!=0){
+                int temp = 2*node + 2;
+                bt[node] = Object();
+                return temp;
+            }
+            else{
+                int temp = findMinNode(2*node + 2);
+                bt[node] = bt[temp];
+                remove(2*node+2,bt[temp]);
+            }
+
+            return node;
+
         }
         else{
-            cout<<"not found"<<endl;
-            return ;
+            cout<<"not found 2"<<endl;
+            //throw "not found" ;
+            return INT_MIN;
         }
 
         // bt[node].roll = 0;
@@ -195,7 +223,7 @@ bool determineFull(int node){
         return true;
     }
     
-    if((bt[2*node + 1].roll==0 && bt[2*node + 2].roll != 0) or (bt[2*node + 1].roll==0 && bt[2*node + 2].roll != 0)){
+    if((bt[2*node + 1].roll==0 && bt[2*node + 2].roll != 0) or (bt[2*node + 1].roll!=0 && bt[2*node + 2].roll == 0)){
         //cout<<"node of conviction : "<<node->data<<endl;
         return false;
     }
@@ -205,17 +233,57 @@ bool determineFull(int node){
     }
 }
 
+
+bool determineBalanced(int node){
+    if(bt[node].roll==0){
+        return true;
+    }
+
+    int left_height = p_height(2*node + 1);
+    int right_height = p_height(2*node + 2);
+
+    if(abs(left_height-right_height)>1){
+        return false;
+    }
+
+    return determineBalanced(2*node + 1) && determineBalanced(2*node + 2);
+}
+
+
+
+bool determinePerfect(int node){
+
+    if(bt[node].roll==0) return true;
+
+    if((bt[2*node + 1].roll==0 && bt[2*node + 2].roll != 0) or (bt[2*node + 1].roll!=0 && bt[2*node + 2].roll == 0)){
+        //cout<<"node of conviction : "<<node->data<<endl;
+        return false;
+    }
+
+    return determinePerfect(2*node + 1) && determinePerfect(2*node + 2);
+}
+
+
+
+
 public:
     
     void addNode(Object x){
-        insert(root, x);
+        
+        insert(0, x);
+    }
+
+    void addNode(int roll){
+        insert(0, Object(roll));
     }
 
     void removeNode(Object x){
+        
         remove(0,x);
     }
 
     void removeNode(int roll){
+        
         remove(0,Object(roll));
     }
 
@@ -246,16 +314,36 @@ public:
     }
 
     int totalNodeCount(){
-        return node_count(root);
+        return node_count(0);
     }
 
     void clear(){
+        
         clearBST(0);
     }
 
 
     bool isFull(){
-        return determineFull(root);
+        return determineFull(0);
+    }
+
+    bool isPerfect(){
+        return determinePerfect(0);
+    }
+
+    bool isBalanced(){
+        return determineBalanced(0);
+    }
+    bool isComplete(){
+        int size = node_count(0);
+        if(size==0) return true;
+
+        for(int i=0; i<size; i++){
+
+            if(bt[i].roll==0) return false;
+        }
+
+        return true;
     }
 
 
@@ -268,7 +356,7 @@ public:
 
 int main(){
 
-BinarySearchTreeArray t = BinarySearchTreeArray(5);
+BinarySearchTreeArray t = BinarySearchTreeArray(10);
 
     t.addNode(Object(50,"a",1));
     t.addNode(Object(30,"b",2));
@@ -276,19 +364,30 @@ BinarySearchTreeArray t = BinarySearchTreeArray(5);
     t.addNode(Object(60,"a",4));
     t.addNode(Object(40,"b",5));
     t.addNode(Object(80,"c",6));
-    t.addNode(Object(20,"c",6));
+    t.addNode(Object(20,"c",60));
 
-    //t.removeNode(Object(40,"b",5));
+    // t.addNode(50);
+    // t.addNode(30);
+    // t.addNode(70);
+    // t.addNode(60);
+    // t.addNode(40);
+    // t.addNode(80);
+    // t.addNode(20);
+
+    t.removeNode(Object(50,"a",1));
 
 
     t.print_f();
 
+    //t.removeNode(70);
+
     //t.PostOrder();
 
+    for(int i=0; i<= t.height_of_the_tree();i++){
+        t.printTheLevel(i);
+        cout<<endl;
+    }
     
-    cout<<t.height_of_the_tree()<<endl;
-
-    cout<<t.isFull()<<endl;
 
     
 return 0;

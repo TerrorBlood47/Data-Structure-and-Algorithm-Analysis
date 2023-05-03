@@ -1,0 +1,8 @@
+Topic : Heap
+
+Resources:
+        1. GeeksForGeeks
+        2. Aditya Verma -- for practice
+        
+        
+Notes: 
