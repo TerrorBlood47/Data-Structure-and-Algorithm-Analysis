@@ -276,11 +276,11 @@ string InfixToPrefix(string a){
 
 int main(){
     
-    //string s = "a+b*(c^d-e)^(f+g*h)-i";
-    //string ans = infixToPostfix(s);
+    string s = "a+b*(c^d-e)^(f+g*h)-i";
+    string ans = infixToPostfix(s);
 
-    string x = "(x+y*z/w+u)";
-    string ans = InfixToPrefix(x);
+    //string x = "(x+y*z/w+u)";
+    //string ans = InfixToPrefix(x);
     cout<<ans<<endl;
     
     return 0;

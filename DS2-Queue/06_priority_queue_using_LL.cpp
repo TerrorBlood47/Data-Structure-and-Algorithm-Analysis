@@ -52,11 +52,15 @@ public:
             while(curr != NULL){
 
                 if(curr->data <= data){
-                    new_node->next = curr->next;
-                    new_node->prev = curr;
-                    curr->next = new_node;
+                    new_node->prev = curr->prev;
+                    new_node->next = curr;
+                    
+                    if(curr->prev != nullptr) (curr->prev)->next = new_node;
+                    curr->prev = new_node;
                     return;
                 }
+
+                curr = curr->prev;
             }
 
             new_node->next = root;
@@ -231,14 +235,15 @@ int main()
     q.enque(14);
     q.enque(100);
 
-    q.deque_f();
-    q.deque_f();
-    q.deque_f();
-    q.deque_f();
-    q.deque_f();
-    q.deque_f();
+    //q.deque_f();
+    //q.deque_f();
+    //q.deque_f();
+    //q.deque_f();
+    //q.deque_f();
+    //q.deque_f();
 
-    q.display_from_top();
+    q.display_from_bottom();
+    cout<<endl;
 
     q.enque(14);
     q.enque(100);

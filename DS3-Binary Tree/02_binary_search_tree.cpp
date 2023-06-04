@@ -1,4 +1,4 @@
-
+ 
 //source - GeeksForGeeks - Introduction to Binary Search Tree 
 
 #include<bits/stdc++.h>
@@ -278,7 +278,7 @@ bool determineBalanced(TreeNode* node){
 }
 
 
-bool determinePerfect(TreeNode* node){
+bool determinePerfect(TreeNode* node,int h,int i){
 
     if(node==NULL) return true;
 
@@ -286,7 +286,12 @@ bool determinePerfect(TreeNode* node){
         return false;
     }
 
-    return determinePerfect(node->left) && determinePerfect(node->right);
+    if(node->left == nullptr and node->right == nullptr){
+        if(i == h) return true;
+        else return false;
+    }
+
+    return determinePerfect(node->left,h,i+1) && determinePerfect(node->right,h,i+1);
 }
 
 
@@ -366,7 +371,8 @@ public:
     }
 
     bool isPerfect(){
-        return determinePerfect(root);
+        int h = height_of_the_tree();
+        return determinePerfect(root,h,1);
     }
 
 };
@@ -378,11 +384,11 @@ int main(){
 
     t.addNode(50);
     t.addNode(30);
-    t.addNode(20);
-    t.addNode(40);
+    //t.addNode(20);
+    //t.addNode(40);
     t.addNode(70);
-    t.addNode(60);
-    t.addNode(80);
+    //t.addNode(60);
+    //t.addNode(80);
     ///t.addNode(10);
     //t.addNode(100);
     //t.addNode(25);

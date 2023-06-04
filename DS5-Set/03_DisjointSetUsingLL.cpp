@@ -5,6 +5,7 @@ class DisjointSetNode{
 public:
     int data;
     DisjointSetNode* parent;
+    int rank;
 
     DisjointSetNode(){
 
@@ -13,6 +14,7 @@ public:
     DisjointSetNode(int val){
         this->data = val;
         this->parent = this; //check
+        this->rank = 0;
     }
 };
 
@@ -55,10 +57,6 @@ public:
         curr->next = new VectorNode(newNode);
         curr->next->next = nullptr;
         size++;
-    }
-
-    void CreateVector(int given_size){ //makeSet()
-
     }
 
     VectorNode* get(DisjointSetNode* Node){
