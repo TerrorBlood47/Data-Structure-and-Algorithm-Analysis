@@ -23,7 +23,7 @@ void Maxheapify(int a[], int n, int i){
 
 void heap_sort(int a[], int n){
     
-    for(int i=n/2 ; i>=0 ; i--){
+    for(int i=n/2 - 1; i>=0 ; i--){ //bottom-up heap construction method
         Maxheapify(a,n,i);
     }
 
