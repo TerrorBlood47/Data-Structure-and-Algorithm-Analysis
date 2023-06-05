@@ -59,7 +59,10 @@ public:
     void dfs(bool visited[], int vertex){
         
         //cout<<vertex<<" checking "<<endl;
+        //cout<<vertex<<" ";
         if(visited[vertex - 1] == true) return;
+
+        cout<<vertex<<" ";
         //cout<<vertex<<" check passed "<<endl;
         visited[vertex - 1] = true;
         graphNode* child = vertices[vertex - 1] -> next;
@@ -124,7 +127,7 @@ public:
 
         while(q.isEmpty()==false){
 
-            int current_vertex = q.bottom();
+            int current_vertex = q.bottom(); //q.front()
             q.deque();
 
             graphNode* child = vertices[current_vertex - 1] -> next;
@@ -211,8 +214,13 @@ int main(){
     //g.printAdjList();
 
     visited = (bool*)calloc(8,sizeof(bool));
+    bool* visited2 = (bool*)calloc(8,sizeof(bool));
+
+    g.printAdjList();
 
     g.bfs(visited,1);//only traverses connected components
+    cout<<endl;
+    g.dfs(visited2,1);
 
 return 0;
 }
