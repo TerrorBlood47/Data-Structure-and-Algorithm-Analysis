@@ -19,24 +19,38 @@ int Ternary_search(int a[], int n, int k){
 
     while(left <= right){
         mid_1 = left + (right - left)/3; //check
-        mid_2= right + (right - left)/3; //check
+        mid_2= right - (right - left)/3; //check
+
+        //cout<<"mid1 = "<<mid_1<<" mid2 = "<<mid_2<<endl;
 
         if(a[mid_1]==k){
+            //cout<<"a"<<endl;
             return mid_1;
         }
         else if(a[mid_2]==k){
+            //cout<<"b"<<endl;
+
             return mid_2;
         }
         else if(k < a[mid_1]){
+            //cout<<"c"<<endl;
+
             right = mid_1 - 1;
         }
         else if(a[mid_1]<k && k<a[mid_2]){
+            //cout<<"d"<<endl;
+
             left = mid_1 + 1;
             right = mid_2 - 1;
         }
-        else if(a[mid_2]>k){
+        else if(a[mid_2] < k){
+            //cout<<"e"<<endl;
             left = mid_2 + 1;
         }
+        // else{ //optional
+        //     cout<<"f"<<endl;
+        //     break;
+        // }
     }
 
     return -1;
@@ -60,7 +74,7 @@ int main(){
     
     return 0;
 /*
-    Time Complexity - a bit greater than binary search 
+    Time Complexity - a bit greater than binary search - O(log3(n))
 
 */
 }
