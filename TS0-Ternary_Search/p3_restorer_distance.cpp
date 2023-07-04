@@ -6,7 +6,7 @@ Notes         :
         
  */
 
-
+///really hard, saved for later
 
 #include<bits/stdc++.h>
 using namespace std;
